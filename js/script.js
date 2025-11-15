@@ -31,6 +31,21 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const todosCol = collection(db, "todos"); // nama koleksi: "todos"
 
+const MONTH_NAMES_ID = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "Mei",
+  "Jun",
+  "Jul",
+  "Agu",
+  "Sep",
+  "Okt",
+  "Nov",
+  "Des",
+];
+
 // ====== DOM ELEMENTS ======
 const todoForm = document.getElementById("todo-form");
 const taskInput = document.getElementById("task-input");
@@ -61,8 +76,16 @@ function setDefaultDateTimeNow() {
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
 
-  // format value untuk type="datetime-local"
-  dateInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+  // nilai asli (untuk disimpan ke Firestore, format ISO)
+  const isoValue = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+  // nilai tampilan lebih enak dibaca
+  const monthLabel = MONTH_NAMES_ID[now.getMonth()];
+  const displayValue = `${day} ${monthLabel} ${year}, ${hours}.${minutes}`;
+
+  // simpan ISO di data-* dan tampilkan yang cantik di input
+  dateInput.dataset.raw = isoValue;
+  dateInput.value = displayValue;
 }
 
 // ====== UTIL: FORMAT TANGGAL UNTUK TAMPILAN TABLE ======
@@ -288,17 +311,18 @@ todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const task = taskInput.value.trim();
-  const date = dateInput.value;
+  const rawDate = dateInput.dataset.raw || ""; // pakai nilai ISO
   const operator = operatorInput.value;
 
-  const isValid = validateForm(task, date, operator);
+  const isValid = validateForm(task, rawDate, operator);
   if (!isValid) return;
 
-  addTodo(task, date, operator);
+  addTodo(task, rawDate, operator);
 
   todoForm.reset();
   setDefaultDateTimeNow();
 });
+
 
 // Filter status
 statusFilterSelect.addEventListener("change", () => {
