@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIKY ALAMSYAH - Coding Camp</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <h1>GROWTH REPO</h1>
+      <p class="subtitle">Pesanan Masuk</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- FORM INPUT PESANAN -->
+    <section class="card" id="form-section">
+      <h2>Rincian Pesanan</h2>
+      <form id="todo-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-input">
+              Nama & NO. Pesanan<span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="task-input"
+              placeholder="Contoh: Joko - 25763279QJ2K1"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="date-input">
+              Tanggal<span class="required">*</span>
+            </label>
+            <input type="datetime-local" id="date-input" />
+          </div>
+
+          <div class="form-group">
+            <label for="operator-input">
+              Editor<span class="required">*</span>
+            </label>
+            <select id="operator-input">
+              <option value="">Pilih Editor</option>
+              <option value="Diky">Diky</option>
+              <option value="Noval">Feni</option>
+            </select>
+          </div>
+        </div>
+
+        <p id="form-error" class="error-message"></p>
+
+        <button type="submit" class="btn primary">Tambah</button>
+      </form>
+    </section>
+
+    <!-- FILTER & CLEAR -->
+    <section class="card" id="controls-section">
+      <div class="controls-row">
+        <div class="filter-group">
+          <label for="status-filter">Filter status</label>
+          <select id="status-filter">
+            <option value="all">Semua</option>
+            <option value="pending">Belum selesai</option>
+            <option value="completed">Selesai</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="operator-filter">Filter Editor</label>
+          <select id="operator-filter">
+            <option value="all">Semua</option>
+            <option value="Diky">Diky</option>
+            <option value="Noval">Feni</option>
+          </select>
+        </div>
+
+        <button id="clear-all-btn" class="btn danger">Hapus Semua</button>
+      </div>
+    </section>
+
+    <!-- LIST PESANAN -->
+    <section class="card" id="list-section">
+      <h2>Daftar Pesanan</h2>
+
+      <!-- STATISTIK -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-label">Total</span>
+          <span id="total-count" class="stat-value">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Selesai</span>
+          <span id="completed-count" class="stat-value">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Belum selesai</span>
+          <span id="pending-count" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <!-- TABEL PESANAN -->
+      <div class="table-wrapper">
+        <table class="todo-table">
+          <thead>
+            <tr>
+              <th>Nama & NO. Pesanan</th>
+              <th>Tanggal</th>
+              <th>Editor</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="todo-table-body">
+            <!-- Baris pesanan di-render dari JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <p id="empty-message" class="empty-message">
+        Belum ada Pesenan. Silakan tambahkan dari form di atas.
+      </p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>&copy; 2025 | Growth Repo</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>
